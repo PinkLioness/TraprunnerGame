@@ -10,20 +10,8 @@ GAME.interface = {
 	footer:undefined,
 	middle:undefined,
 	statContainers:{ // These variables are merely suggestions, they should be the same as the player stats all the time but might not be
-		hp:undefined,
 		lust:undefined,
-		money:undefined,
-		assVolume:undefined,
-		vaginalVolume:undefined,
-		////////////////////////////
-		strength:undefined,
-		dexterity:undefined,
-		intelligence:undefined,
-		wisdom:undefined,
-		speed:undefined,
-		constitution:undefined,
-		sexuality:undefined,
-		luck:undefined
+		keys:undefined
 	},
 
 
@@ -88,29 +76,7 @@ GAME.interface = {
 		window.addEventListener('resize', GAME.interface.setWindowSize);
 
 
-
-		
-		GAME.interface.statContainers['hp'] = GAME.interface.addMeter(new GAME.interface.classes.statBar('HP'));
 		GAME.interface.statContainers['lust'] = GAME.interface.addMeter(new GAME.interface.classes.statBar("Lust"));
-		GAME.interface.statContainers['money'] = GAME.interface.addMeter(new GAME.interface.classes.meterlessStatBar("Money", "copper", true));
-
-		var divisions = [ // TODO: Figure out the best place for this to be
-			{message:'Empty', percentage:0},
-			{message:'A bit of', percentage:1},
-			{message:'Pretty full with', percentage:25},
-			{message:'Bloated with', percentage:50},
-			{message:'Bursting with', percentage:70},
-			{message:'Overflowing with', percentage:80},
-			{message:'Bursting with', percentage:90}
-		];
-		GAME.interface.statContainers['assVolume'] = GAME.interface.addMeter(new GAME.interface.classes.textStatBarWithTypeOfContents('Ass', divisions, 100));
-		GAME.interface.statContainers['vaginalVolume'] = GAME.interface.addMeter(new GAME.interface.classes.textStatBarWithTypeOfContents('Vagina', divisions, 100));
-
-		GAME.interface.statArea.appendChild(document.createElement('hr'));
-		
-		for(var stat in GAME.p.stats){ // Using the player stats to keep things updated, the interface class variables are merely suggestions
-			var capitalizedName = stat.charAt(0).toUpperCase() + stat.substring(1);
-			GAME.interface.statContainers[stat] = GAME.interface.addMeter(new GAME.interface.classes.statBar(capitalizedName));
-		}
+		GAME.interface.statContainers['keys'] = GAME.interface.addMeter(new GAME.interface.classes.meterlessStatBar("Keys", "keys", true));
 	}
 };

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title></title>
+	<title>Traprunner: The Game</title>
 	<link rel="stylesheet" type="text/css" href="p.css">
 </head>
 <body>
-	<header>Test header!</header>
+	<header>Traprunner: The Game</header>
 	<div class="middle">
 
 		<div class="container">
@@ -20,25 +20,6 @@
 	<footer id="buttonArea"></div>
 	<script>
 	'use strict';
-	// If I see a file without 'use strict', https://www.youtube.com/watch?v=3X6eTxnh60E (and if any of you perverts think you'll enjoy it, warn me so I can use an iron rod instead)
-	
-	// TODO: Split this into separate files
-	// TODO: Figure out HOW it will be split, tentatively:
-	/* 
-	one file defines the player (and the inventory? TODO: Think on this),
-	other the game startup code,
-	other save and load code, - TODO
-	other the town code, - TODO
-	other the adventure code, - TODO
-	other the event parser code - TODO, probably similar to how monsters are done (nested objects with functions for each event option? Easy as shit to code events, but anything with more than 4 or 5 nested options becomes a cthulhu)
-	one for the generic template monster - for ease of understanding the monster code and creating mods // TODO: Consider implementing an interface for creating simple monsters that don't need custom code?
-	
-	And now for the most important question:
-	One monster per file? This would be the best, other than the potential of having around a hundred lines importing scripts. // TODO: Research if this may cause problems
-	^^^ Same for events
-	*/
-	// TODO: FOR THE LOVE OF GOD TEST THE SPLITTING
-	
 	function doesNothing(){};
 	function randomIntFromInterval(min,max){return Math.floor(Math.random()*(max-min+1)+min);};
 	function randomPercentageMultiplierFromInterval(min,max){
@@ -52,10 +33,6 @@
 	};
 
 	var GAME = {
-		events:{
-			battleOver:new CustomEvent('battleOver') // TODO: Figure out if it's better to place the events in a structure like this, or if the ability to pass the detail argument* to customize things outweighs the benefit of code centralization.
-			// * See parameters here: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent#Constructor
-		},
 		init:function(){
 			GAME.interface.init();
 
@@ -63,81 +40,6 @@
 		},
 		
 	}
-	
-
-	/*
-	
-	http://en.wiktionary.org/wiki/Wikisaurus:testicles
-	
-	IDEAZ
-	
-	alguma coisa relacionada a ovos? 
-	
-	glitter lion *_* // possible infection??? 8D
-	tribal lions
-	anubis-like jackals with gold cum
-	horses, duh
-	tentacle monsters?
-	a hen with a tie // joke scene obviously porque huehuehuehueheuheuheuheuehueheuheuehuheuehueheuheuheue
-	koalas?
-	lobo guará
-	random encounter in the jungle: capybara with rattlesnake (cascavel) comendo uma casa de madeira e fazendo um buraco, enquanto uma mulher pede ajuda pra um tucano pra espantar ela
-	alien do aliens?
-	
-	
-	Free for taking:
-	ents
-	alraunes? (MALE) Plant monsters in general too, begging for tentacles
-	sergal
-	bears, variations: pandas, arctic, grizzly, black, etc.
-	Slimegirls
-	
-	
-	itens alamdiçoados que causam efeitos: 
-	bra of milk production?
-	TODO: pensar mais nisso
-	
-	//////////////////////////////////////////////////
-	// INFECTIONS:
-	4 types:
-	skin: Changes overall skin appearance: leather, rubber, gel (variations: pudding (random giga-puddi encounter?), chocolate?)?, scales, glass, metals (mercury, gold, silver, etc etc. provavelmente implementar usando o mesmo esquema de cor do lobo, só trocando o termo na frase)
-	Shape: Body shape, fox, feline, etc. etc.
-	Tail?
-	Head?
-	Wings?
-	Possivelmente salpicar eventos pra lá e pra cá, pra por exemplo, quando o cara tiver com infecção de borracaha ele não poder equipar armas porque as mãos viraram mittens (possivelmente curar isso com uma poção fácil de conseguir, ams sem perder a transformação?)
-	
-	random gangbangs?
-	
-20:51 - AEykzel: imagina um tipo de lupino, com rosto um tanto mais were a lupino que o usual, bulge absurdamente grande comparado a e um físico mais forte que o usual, mas sem fugir do conceito hound; a cum dele é mais espessa que a cum usual e tem propriedades were em "humanos" ou seres anthros; also tendência a dar rape em qualquer anthro que se aproxime e atacar em bando, because yayz for gangbang <3
-
-	nisharu:
-	75% ass chance
-	plate armor pro corpo e pra parte taur, com a bunda desprotegida e uma espada comum
-	'You see something very close to you and hide. Taking a careful closer look, you can see a brown taur creature... A fox, judging by the fluffy tail that moves slightly. Moving a bit around it you see a thick, heavy-looking set of plate mail covering his chest and most of his back. He also has a sheated sword close to his hand, convincing you that a battle would be considerably hard. Its hind legs and butt are completely uncovered, however, letting you take a glimpse at his '+GAME.currentMonster.getDickAdjective()+'. '+(randomIntFromInterval(0,1) == 1 ? 'As you are sizing up his balls, his tail swishes to a side and you can\'t help but notice that his asshole looks like a very constantly used one. ' : '')+' You can\'t see his member from where you are, and moving around would be too dangerous as the beast seems very alert.'
-	when m surps p, allow battle
-	versão com roupa de borracha, infecciosa, brown, blue and green
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	*/
 	
 	document.addEventListener("DOMContentLoaded", function(event) {
 		GAME.init();
@@ -149,7 +51,5 @@
 	<script src="main.js"></script>
 	<script src="interface.js"></script>
 	<script src="interface.meters.js"></script>
-	<script src="battle.js"></script>
-	<script src="monster.js"></script>
 </body>
 </html>

@@ -26,7 +26,10 @@ body {
 -----------------------------------------------------------------------------*/
 header{
 	height: 75px;
+	line-height: 75px;
 	background: #FFE680;
+	padding-left: 50px;
+	font-size: 200%;
 }
 
 

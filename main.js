@@ -3,10 +3,9 @@ var GAME = GAME || {};
 GAME.main = {
 	mainMenu:function(){
 		GAME.interface.clearText();
-		GAME.interface.addText("main menu \n test");
-		GAME.interface.addText("main menu \n test2");
+		GAME.interface.addText("A few things will be here later, like a maze generation selector, a sex selector for your char, etc.");
 
-		GAME.interface.drawButtons({text:'New game', buttonFunction:GAME.main.newGame.sexQuestion}, {text:'Load game', buttonFunction:GAME.main.loadGame});
+		GAME.interface.drawButtons({text:'New game', buttonFunction:GAME.main.newGame.sexQuestion});
 	},
 	newGame:{ // Contains all functions related to starting a new game.
 		sexQuestion:function(){
