@@ -9,13 +9,17 @@ GAME.main = {
 	},
 	newGame:{ // Contains all functions related to starting a new game.
 		sexQuestion:function(){
+			//console.log(GrowingTreeMazeGenerator(5,5));
+			var x = drawMaze(GrowingTreeMazeGenerator(5,5));
 			GAME.p.reset();
+			x[0][0].style.backgroundColor = 'red';
+			GAME.interface.statContainers['lust'].updateValue(70);
 			
-			GAME.interface.clearTextAndButtons();
+			/*GAME.interface.clearTextAndButtons();
 			GAME.interface.addText("Just a few questions (one for now) before starting the game.");
 			GAME.interface.addText("First, are you male or female? (You might be able to mix and match parts in the game)");
 			
-			GAME.interface.drawButtons({text:'Male', buttonFunction:GAME.main.newGame.choseMale}, {text:'Female', buttonFunction:GAME.main.newGame.choseFemale});
+			GAME.interface.drawButtons({text:'Male', buttonFunction:GAME.main.newGame.choseMale}, {text:'Female', buttonFunction:GAME.main.newGame.choseFemale});*/
 		},
 		choseMale:function(){
 			GAME.p.hasVagina = false;

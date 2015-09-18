@@ -91,6 +91,32 @@ p[data-value]:after{
 	position: absolute; right:0;
 }
 
+
+/* Maze 
+-----------------------------------------------------------------------------*/
+
+#mazeArea{
+	margin: 0 auto;
+	background-color: white;
+	/* +2 because borders */
+	width: 200px;
+	height: 200px;
+	border: 1px solid black;
+}
+
+.hasTopWall{
+	border-top: 1px solid black;
+}
+.hasRightWall{
+	border-right: 1px solid black;
+}
+.hasBottomWall{
+	border-bottom: 1px solid black;
+}
+.hasLeftWall{
+	border-left: 1px solid black;
+}
+
 /* Footer
 -----------------------------------------------------------------------------*/
 footer{

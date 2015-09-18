@@ -6,6 +6,9 @@ GAME.interface = {
 	buttonArea:undefined,
 	textArea:undefined,
 	statArea:undefined,
+		inventoryArea:undefined, // These are children
+		mazeArea:undefined,
+	
 	header:undefined,
 	footer:undefined,
 	middle:undefined,
@@ -78,5 +81,17 @@ GAME.interface = {
 
 		GAME.interface.statContainers['lust'] = GAME.interface.addMeter(new GAME.interface.classes.statBar("Lust"));
 		GAME.interface.statContainers['keys'] = GAME.interface.addMeter(new GAME.interface.classes.meterlessStatBar("Keys", "keys", true));
+		
+		
+		GAME.interface.statArea.appendChild(document.createElement('hr'));
+		GAME.interface.inventoryArea = document.createElement('span');
+		GAME.interface.inventoryArea.innerHTML = 'Inventory goes here';
+		GAME.interface.statArea.appendChild(GAME.interface.inventoryArea);
+		
+		
+		GAME.interface.statArea.appendChild(document.createElement('hr'));
+		GAME.interface.mazeArea = document.createElement('div');
+		GAME.interface.mazeArea.id = 'mazeArea';
+		GAME.interface.statArea.appendChild(GAME.interface.mazeArea);
 	}
 };
