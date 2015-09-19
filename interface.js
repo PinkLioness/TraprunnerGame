@@ -84,7 +84,7 @@ GAME.interface = {
 		
 		
 		GAME.interface.statArea.appendChild(document.createElement('hr'));
-		GAME.interface.inventoryArea = document.createElement('span');
+		GAME.interface.inventoryArea = document.createElement('div');
 		GAME.interface.inventoryArea.innerHTML = 'Inventory goes here';
 		GAME.interface.statArea.appendChild(GAME.interface.inventoryArea);
 		
