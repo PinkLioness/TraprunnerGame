@@ -150,7 +150,7 @@ function drawMaze(maze){
 			
 			cell.className = walls.join(' ');
 			
-			mazeCells[x][y] = cell; // This is so [0][0] refers to the one on the top left instead of the one on the bottom left
+			mazeCells[x][y] = cell;
 			
 			container.appendChild(cell);
 		}
