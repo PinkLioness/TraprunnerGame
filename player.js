@@ -1,6 +1,6 @@
 'use strict';
 var GAME = GAME || {};
-GAME.p = {
+GAME.player = {
 	
 	lust:0,
 	keys:0,

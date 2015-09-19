@@ -48,7 +48,7 @@ GAME.interface = {
 	updatePlayerStats:function(player){
 		// Use the player argument whenever it's sent, this is so battles are easier, we can easily set up fantasy battles, etc.
 		if (player == undefined){ // But if it's not sent, well, it must be the main player object.
-			player = GAME.p;
+			player = GAME.player;
 		}
 		// TODO: updating
 	},

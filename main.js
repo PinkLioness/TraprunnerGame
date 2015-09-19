@@ -11,7 +11,7 @@ GAME.main = {
 		sexQuestion:function(){
 			GAME.interface.mazeArea.innerHTML = '';
 			var x = drawMaze(GrowingTreeMazeGenerator(5,5));
-			GAME.p.reset();
+			GAME.player.reset();
 			x[0][0].style.backgroundColor = 'red';
 			GAME.interface.statContainers['lust'].updateValue(70);
 			

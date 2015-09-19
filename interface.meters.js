@@ -230,7 +230,7 @@ GAME.interface.classes.genericTextStatBar.prototype.fellUnderZero = doesNothing;
 ///////////////////////////////////////////////////////////////
 
 GAME.interface.classes.textStatBarWithTypeOfContents = function(){
-	this.hole = (arguments[0] == 'Ass') ? 'ass' : 'vagina'; // So we can catch the event and use this data like GAME.p.something[hole]
+	this.hole = (arguments[0] == 'Ass') ? 'ass' : 'vagina'; // So we can catch the event and use this data like GAME.player.something[hole]
 	GAME.interface.classes.genericTextStatBar.apply(this, arguments);
 };
 GAME.interface.classes.textStatBarWithTypeOfContents.prototype = Object.create(GAME.interface.classes.genericTextStatBar.prototype);
