@@ -22,7 +22,7 @@ Growing Tree algorithm
 
 This implementation isn't nearly as optimized as possible, but honestly there's no need for that.
 */
-function GrowingTreeMazeGenerator(xsize, ysize){
+function GrowingTreeMazeGenerator(xsize, ysize, mazeType){
 	function hasVisitedCell(cellX, cellY, maze){
 		var cell = maze[cellX][cellY];
 		for (var i = cell.length - 1; i >= 0; i--) {
@@ -49,24 +49,32 @@ function GrowingTreeMazeGenerator(xsize, ysize){
 	list.push({x:initialCellX, y:initialCellY});
 	
 	while(list.length != 0){
-		// This one transforms it into Prim's algorithm, has lots of dead ends
-		// var index = randomIntFromInterval( 0, (list.length-1) );
-		
-		// This one is for the recursive backtracker algorithm, tends to make long winding halls
-		var index = list.length-1;
-		
-		/* This one is a mix of both, makes really great and really crappy mazes when it wants to
-		var index = undefined;
-		if(randomIntFromInterval(0, 1)){
-			index = randomIntFromInterval( 0, (list.length-1) );
-		}else{
-			index = list.length-1;
+		var index = 0;
+		switch(Number(mazeType)){
+			case 1:
+				// This one is for the recursive backtracker algorithm, tends to make long winding halls
+				index = list.length-1;
+				break;
+			case 2:
+				// This one transforms it into Prim's algorithm, has lots of dead ends
+				index = randomIntFromInterval( 0, (list.length-1) );
+				break;
+			case 3:
+				// This one is a mix of both, makes really great and really crappy mazes when it wants to
+				if(randomIntFromInterval(0, 1)){
+					index = randomIntFromInterval( 0, (list.length-1) );
+				}else{
+					index = list.length-1;
+				}
+				break;
+			case 4:
+				// Oldest cell added to list, aka Grandmother's
+				var index = 0;
+				break;
+			default:
+				alert('NO TYPE PASSED TO THE MAZE GENERATOR; USING RECURSIVE BACKTRACKER SO WE DON\'T CRASH');
+				index = list.length-1;
 		}
-		*/
-		
-		// Oldest cell added to list, always makes a nice pattern
-		//var index = 0;
-		
 		
 		var cell = list[index];
 		
@@ -126,7 +134,7 @@ function GrowingTreeMazeGenerator(xsize, ysize){
 
 function drawMaze(maze){
 	var container = GAME.interface.mazeArea;
-	var defaultCellWidthHeight = (200 / maze.length) - 2; // -2 because of the borders
+	var defaultCellWidthHeight = (400 / maze.length) - 2; // -2 because of the borders
 	
 	var mazeCells = [];
 	
