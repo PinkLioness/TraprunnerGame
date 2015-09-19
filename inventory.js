@@ -95,8 +95,8 @@ GAME.inventory = {
 			var item = document.createElement('li');
 			item.innerHTML = GAME.inventory.items[i].displayName;
 			if(GAME.inventory.items[i].equippable){
-				if(GAME.inventory.items[i].release){
-					switch(){
+				if(GAME.inventory.items[i].equipped){
+					switch(GAME.inventory.items[i].release){
 						case "never":
 							item.innerHTML += " (Never releases)";
 							break;
@@ -107,6 +107,8 @@ GAME.inventory = {
 							item.innerHTML += " (Releases in "+GAME.inventory.items[i].release+" turns)";
 							break;
 					}
+				}else{
+					item.innerHTML += " (Not equipped)";
 				}
 			}else{
 				item.innerHTML += " x "+GAME.inventory.items[i].amount;
@@ -136,26 +138,30 @@ GAME.inventory = {
 		}
 		return -1;
 	},
-	isSlotFree:function(){
+	findItemBySlot:function(item){
 		for (var i = GAME.inventory.items.length - 1; i >= 0; i--){
-			if(GAME.inventory.items[i].slot == item.slot){
+			if((GAME.inventory.items[i].slot & item.slot) != 0){
 				return i;
 			}
 		}
 		return -1;
-	}
+	},
 	
 	canEquipItem:function(item){
-		
-		/*
-		if there's no item in the slot and the player has the necessary slot
-		*/
-		if(GAME.inventory.findItem(item, 'slot')){}
+		// if there's no item in the slot and the player has the necessary slot
+		return ((GAME.inventory.findItemBySlot(item) == -1) && (GAME.player.slots & item.slot != 0))
 	},
-	equipItem:function(){
-		
+	equipItem:function(item){
+		// if item is equippable, equip and run its effectOnEquip
+		if(item.equippable){
+			item.equipped = true;
+			item.effectOnEquip();
+		}else{
+			alert("TRIED TO EQUIP AN ITEM THAT WASN'T EQUIPPABLE AAAAAAAAAAAAA");
+		}
 	},
-	unequipItem:function(){
-		
+	unequipItem:function(item){
+		item.equipped = false;
+		item.effectOnUnequip();
 	}
 }
