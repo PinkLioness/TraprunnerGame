@@ -63,11 +63,11 @@ p{
 -----------------------------------------------------------------------------*/
 #statArea{
 	float: left;
-	width: 250px;
-	margin-left: -250px;
+	width: 450px;
+	margin-left: -450px;
 	position: relative;
 	background: #FFACAA;
-	height:300px;
+	height:600px;
 }
 
 meter{
@@ -98,9 +98,8 @@ p[data-value]:after{
 #mazeArea{
 	margin: 0 auto;
 	background-color: white;
-	/* +2 because borders */
-	width: 200px;
-	height: 200px;
+	width: 400px;
+	height: 400px;
 	border: 1px solid black;
 }
 

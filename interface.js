@@ -61,7 +61,7 @@ GAME.interface = {
 	setWindowSize:function(){
 		requestAnimationFrame(function(){
 			var availableSize = window.innerHeight - (GAME.interface.header.offsetHeight + GAME.interface.footer.offsetHeight);
-			if(availableSize < 460){availableSize = 460;}
+			if(availableSize < 800){availableSize = 800;}
 			GAME.interface.textArea.style.height = GAME.interface.statArea.style.height = GAME.interface.middle.style.height = availableSize + 'px';
 		});
 	},
