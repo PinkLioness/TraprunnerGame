@@ -17,6 +17,7 @@ const PENIS = 2048;
 const SHEATH = 4096; // What if the player is, say, a dragon with a slit... Hmm.
 const VAGINA = 8192;
 const ASSHOLE = 16384;
+const BASEBODY = HEAD + FACE + NECK + CHEST + ARMS + WRISTS + BELLY + HIPS + LEGS + FEET + ASSHOLE; // Everyone has these
 
 
 GAME.inventory = {
@@ -27,6 +28,7 @@ GAME.inventory = {
 		name: unique string for each item
 		displayName: String that will be displayed
 		
+		amount: integer, how many of these you have
 		equippable: boolean
 		if equippable is true these must be defined
 			slot: one of the slot constants, see inventory.js
@@ -39,7 +41,6 @@ GAME.inventory = {
 			effectOnUnequip: function, mostly used to display text
 		else these must
 			effectWhenUsed: function
-			amount: integer, how many of these you have
 	}
 	*/
 	
@@ -48,16 +49,17 @@ GAME.inventory = {
 		if item is in inventory
 			update amount
 		else
-			add item to list
+			add 1 (one) item to list
 		*/
 		var itemPosition = GAME.inventory.findItem(item);
 		if(itemPosition != -1){
 			GAME.inventory.items[itemPosition].amount += 1;
 		}else{
+			item.amount = 1;
 			GAME.inventory.items.push(item);
 		}
 	},
-	removeItem:function(){
+	removeItem:function(item){
 		/*
 		if item is in inventory
 			update amount
@@ -68,9 +70,8 @@ GAME.inventory = {
 		*/
 		var itemPosition = GAME.inventory.findItem(item);
 		if(itemPosition != -1){
-			GAME.inventory.items[itemPosition].amount -= 1;
 			if(GAME.inventory.items[itemPosition].amount == 0){
-				GAME.inventory.items.splice(itemPosition, 1);
+				GAME.inventory.removeItemByIndex(itemPosition);
 			}
 		}else{
 			alert("Tried to remove an item, but item wasn't in inventory, I will now panic");
@@ -149,7 +150,7 @@ GAME.inventory = {
 	
 	canEquipItem:function(item){
 		// if there's no item in the slot and the player has the necessary slot
-		return ((GAME.inventory.findItemBySlot(item) == -1) && (GAME.player.slots & item.slot != 0))
+		return ((GAME.inventory.findItemBySlot(item) == -1) && (GAME.player.equipmentSlots & item.slot != 0))
 	},
 	equipItem:function(item){
 		// if item is equippable, equip and run its effectOnEquip
@@ -163,5 +164,18 @@ GAME.inventory = {
 	unequipItem:function(item){
 		item.equipped = false;
 		item.effectOnUnequip();
+	},
+
+	removeItemByIndex:function(index){
+		GAME.inventory.items.splice(index, 1);
+	},
+
+
+	removeOnOrgasmItems:function(){
+		for (var i = GAME.inventory.items.length - 1; i >= 0; i--){
+			if(GAME.inventory.items[i].release === 'onOrgasm'){
+				GAME.inventory.removeItemByIndex(i);
+			}
+		}
 	}
 }

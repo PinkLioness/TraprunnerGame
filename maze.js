@@ -1,10 +1,15 @@
 'use strict';
 
 // Constants, in vector form
-const NORTH = {x:1,  y:0};
-const EAST  = {x:0,  y:1};
-const SOUTH = {x:-1, y:0};
-const WEST  = {x:0,  y:-1};
+const VECTOR_NORTH = {x:1,  y:0};
+const VECTOR_EAST  = {x:0,  y:1};
+const VECTOR_SOUTH = {x:-1, y:0};
+const VECTOR_WEST  = {x:0,  y:-1};
+// Constants, for CSS and cell usage
+const CELL_NORTH = 0;
+const CELL_EAST = 1;
+const CELL_SOUTH = 2;
+const CELL_WEST = 3;
 
 //////////////////////
 /*
@@ -81,10 +86,10 @@ function GrowingTreeMazeGenerator(xsize, ysize, mazeType){
 		// figure out which directions you can go from the cell
 		var possibleDirections = [];
 		// if it doesn't touches any of the borders and if the cell wasn't visited, that is, if the cell has 4 walls
-		if((cell.x + 1 != xsize)  &&  !hasVisitedCell(cell.x + 1, cell.y, maze)){possibleDirections.push(NORTH)};
-		if((cell.x - 1 != -1)     &&  !hasVisitedCell(cell.x - 1, cell.y, maze)){possibleDirections.push(SOUTH)};
-		if((cell.y + 1 != ysize)  &&  !hasVisitedCell(cell.x, cell.y + 1, maze)){possibleDirections.push(EAST)};
-		if((cell.y - 1 != -1)     &&  !hasVisitedCell(cell.x, cell.y - 1, maze)){possibleDirections.push(WEST)};
+		if((cell.x + 1 != xsize)  &&  !hasVisitedCell(cell.x + 1, cell.y, maze)){possibleDirections.push(VECTOR_NORTH)};
+		if((cell.x - 1 != -1)     &&  !hasVisitedCell(cell.x - 1, cell.y, maze)){possibleDirections.push(VECTOR_SOUTH)};
+		if((cell.y + 1 != ysize)  &&  !hasVisitedCell(cell.x, cell.y + 1, maze)){possibleDirections.push(VECTOR_EAST)};
+		if((cell.y - 1 != -1)     &&  !hasVisitedCell(cell.x, cell.y - 1, maze)){possibleDirections.push(VECTOR_WEST)};
 		
 		// If there are no unvisited neighbors, remove the cell from list, otherwise make a path to a new cell
 		if(possibleDirections.length == 0){
@@ -98,21 +103,21 @@ function GrowingTreeMazeGenerator(xsize, ysize, mazeType){
 			// carve passage
 			var newCell = {x:(cell.x + direction.x), y:(cell.y + direction.y)};
 			switch(direction){ // TODO: Think if we can do wall carving in a one-liner
-				case NORTH:
-					maze[cell.x][cell.y][0] = 0;
-					maze[newCell.x][newCell.y][2] = 0;
+				case VECTOR_NORTH:
+					maze[cell.x][cell.y][CELL_NORTH] = 0;
+					maze[newCell.x][newCell.y][CELL_SOUTH] = 0;
 					break;
-				case EAST:
-					maze[cell.x][cell.y][1] = 0;
-					maze[newCell.x][newCell.y][3] = 0;
+				case VECTOR_EAST:
+					maze[cell.x][cell.y][CELL_EAST] = 0;
+					maze[newCell.x][newCell.y][CELL_WEST] = 0;
 					break;
-				case SOUTH:
-					maze[cell.x][cell.y][2] = 0;
-					maze[newCell.x][newCell.y][0] = 0;
+				case VECTOR_SOUTH:
+					maze[cell.x][cell.y][CELL_SOUTH] = 0;
+					maze[newCell.x][newCell.y][CELL_NORTH] = 0;
 					break;
-				case WEST:
-					maze[cell.x][cell.y][3] = 0;
-					maze[newCell.x][newCell.y][1] = 0;
+				case VECTOR_WEST:
+					maze[cell.x][cell.y][CELL_WEST] = 0;
+					maze[newCell.x][newCell.y][CELL_EAST] = 0;
 					break;
 				default: // Should never happen, but doesn't hurts to scream
 					alert('GOT A BUG DURING WALL-CARVING');
@@ -146,10 +151,10 @@ function drawMaze(maze){
 			var height = defaultCellWidthHeight;
 			
 			var walls = [];
-			if(maze[x][y][0] == 1){walls.push('hasTopWall');}else{height += 1;}
-			if(maze[x][y][1] == 1){walls.push('hasRightWall');}else{width += 1;}
-			if(maze[x][y][2] == 1){walls.push('hasBottomWall');}else{height += 1;}
-			if(maze[x][y][3] == 1){walls.push('hasLeftWall');}else{width += 1;}
+			if(maze[x][y][CELL_NORTH] == 1){walls.push('hasTopWall');}else{height += 1;}
+			if(maze[x][y][CELL_EAST] == 1){walls.push('hasRightWall');}else{width += 1;}
+			if(maze[x][y][CELL_SOUTH] == 1){walls.push('hasBottomWall');}else{height += 1;}
+			if(maze[x][y][CELL_WEST] == 1){walls.push('hasLeftWall');}else{width += 1;}
 			
 			cell.style.width = width + 'px';
 			cell.style.height = height + 'px';

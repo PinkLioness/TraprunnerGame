@@ -51,11 +51,21 @@ header{
 	overflow: hidden;
 }
 #textArea{
-	margin: 10px 250px 10px 10px;
+	margin: 10px 460px 10px 10px;
 	overflow-y: auto;
 }
 p{
 	margin-bottom: 5px;
+}
+
+.mainMenuSpacer{
+	display: inline-block;
+	width:150px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid gray;
+}
+.standardInput{
+	width:200px;
 }
 
 
@@ -129,4 +139,18 @@ footer{
 	padding-bottom: -10px;
 	padding-left: 10px;
 	padding-right: -10px;
+}
+#navigationButtons{
+	display:inline-block;
+	width:300px;
+	border: 1px solid black;
+}
+#navigationButtons > button{
+	margin: auto;
+	text-align: center;
+	width:100px;
+	height:40px;
+}
+#navigationButtons > button:first-child{
+	display:block;
 }
