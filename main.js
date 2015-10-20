@@ -110,7 +110,7 @@ GAME.main = {
 
 			// On easy we get the exit painted by default
 			if(GAME.main.difficulty === 1){
-				paintThing(GAME.main.exitLocation.x, GAME.main.exitLocation.y, 'hotpink');
+				GAME.main.maze.paintThing(GAME.main.exitLocation.x, GAME.main.exitLocation.y, 'hotpink');
 			};
 
 			//update interface?
@@ -318,12 +318,55 @@ GAME.main = {
 		doWalk:function(direction){
 			if(GAME.main.maze.canWalkTo(GAME.player.x, GAME.player.y, direction)){
 				var directionVector = GAME.main.maze.convertToVector(direction);
-				GAME.player.x += directionVector.x;
+				GAME.player.x -= directionVector.x;
 				GAME.player.y += directionVector.y;
 				// TODO check for things
 				GAME.main.newTurn();
 			}else{
-				alert("TRIED TO WALK BUT THERE'S A WALL ON THE WAY! x:, y:, direction: I");
+				alert("TRIED TO WALK BUT THERE'S A WALL ON THE WAY! x:%i, y:%i, direction: %i", GAME.player.x, GAME.player.y, direction);
+			}
+		},
+		keyboardEventHandler:function(ev){
+			ev = ev || window.event;
+			var key = ev.keyCode;
+
+			// WASD + arrow keys movement, enter and space to press the first button
+			// We also stop the arrow keys from moving the page
+			switch(Number(key)){
+				case 38:
+					ev.preventDefault();
+				case 87:
+					if(GAME.main.maze.canWalkTo(GAME.player.x, GAME.player.y, CELL_NORTH)){
+						GAME.main.movement.doWalk(CELL_NORTH);
+					}
+					break;
+				case 39:
+					ev.preventDefault();
+				case 68:
+					if(GAME.main.maze.canWalkTo(GAME.player.x, GAME.player.y, CELL_EAST)){
+						GAME.main.movement.doWalk(CELL_EAST);
+					}
+					break;
+				case 40:
+					ev.preventDefault();
+				case 83:
+					if(GAME.main.maze.canWalkTo(GAME.player.x, GAME.player.y, CELL_SOUTH)){
+						GAME.main.movement.doWalk(CELL_SOUTH);
+					}
+					break;
+				case 37:
+					ev.preventDefault();
+				case 65:
+					if(GAME.main.maze.canWalkTo(GAME.player.x, GAME.player.y, CELL_WEST)){
+						GAME.main.movement.doWalk(CELL_WEST);
+					}
+					break;
+				case 13:
+				case 32:
+					document.querySelector('button').click();
+					break;
+
+
 			}
 		}
 	}

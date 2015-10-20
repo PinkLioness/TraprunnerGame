@@ -37,7 +37,7 @@
 	var GAME = {
 		init:function(){
 			GAME.interface.init();
-
+			document.addEventListener('keydown', GAME.main.movement.keyboardEventHandler);
 			GAME.main.mainMenu();
 		},
 		
