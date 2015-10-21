@@ -8,11 +8,14 @@ function Trap(random){
 Trap.prototype.init = function(){
 	this.type = 'trap';
 	// TODO: filter by genitals the player does have
-	this.data = trapList[randomIntFromInterval(0, trapList.length)];
-}
 
-Trap.prototype.activateTrap = function(){
-	
+	// cloning trap so one won't affect the other
+	var originalTrap = trapList[randomIntFromInterval(0, trapList.length-1)];
+	var keys = Object.keys(originalTrap);
+	this.data = {};
+	for (var i = keys.length - 1; i >= 0; i--) {
+		this.data[keys[i]] = originalTrap[keys[i]];
+	}
 }
 
 /*
@@ -68,7 +71,10 @@ var trapList = [
 			GAME.player.addLust(10);
 		},
 		effectOnEquip:function(){GAME.interface.addText('got trap 2');},
-		effectOnUnequip:function(){GAME.interface.addText('lost trap 2');}
+		effectOnUnequip:function(){GAME.interface.addText('lost trap 2');},
+		effectCannotEquip:function(){
+			// hmmm
+		}
 	},
 	{
 		name:'test3',

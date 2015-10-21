@@ -53,8 +53,8 @@ GAME.interface = {
 			player = GAME.player;
 		}
 		this.statContainers.lust.updateValue(player.lust);
-		this.statContainers.keys.updateValue(player.keys);
-		GAME.interface.updateInterface();
+		this.statContainers.keys.updateValue(GAME.main.keycardsNeeded - GAME.player.keys);
+		GAME.inventory.updateInterface();
 	},
 
 	addMeter:function(meter){

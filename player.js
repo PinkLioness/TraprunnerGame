@@ -79,6 +79,25 @@ GAME.player = {
 			this.y = y;
 		}
 	},
+
+	getKeycard:function(){
+		GAME.main.mazeThings[this.x][this.y] = undefined;
+		this.keys += 1;
+		GAME.interface.addText('Found a keycard!');
+	},
+
+	getTrap:function(trap){
+		// remove trap
+		GAME.main.mazeThings[this.x][this.y] = undefined;
+		// add to player
+		if(GAME.inventory.canEquipItem(trap.data)){
+			GAME.inventory.addItem(trap.data);
+			GAME.inventory.equipItem(trap.data);
+		}else{
+			console.log(trap);
+			trap.data.effectCannotEquip();
+		}
+	},
 	
 	texts:{
 		filterList:function(listName, flagsPlayerHas, playerGender){

@@ -16,6 +16,7 @@ GAME.main = {
 	foundExit:false,
 	exitLocation:undefined,
 	difficulty:undefined,
+	keycardsNeeded:undefined,
 
 	timeTaken:0,
 	
@@ -70,22 +71,22 @@ GAME.main = {
 				alert("Weird, you picked a difficulty that doesn't exist. Defaulting to medium.");
 				GAME.main.difficulty = 2;
 			}
-			var numberKeycards = 0, numberTraps = 0;
-			switch(difficulty){
+			var numberTraps = 0;
+			switch(GAME.main.difficulty){
 				case 1:
-					numberKeycards = 1;
+					GAME.main.keycardsNeeded = 1;
 					numberTraps = Math.round(mazeSize * mazeSize / 10); // ~10% of the cells are trapped
 					break;
 				case 2:
-					numberKeycards = 3;
+					GAME.main.keycardsNeeded = 3;
 					numberTraps = Math.round(mazeSize * mazeSize / 4); // ~25% of the cells are trapped
 					break;
 				case 3:
-					numberKeycards = 5;
+					GAME.main.keycardsNeeded = 5;
 					numberTraps = Math.round(mazeSize * mazeSize / 2); // ~50% of the cells are trapped
 					break;
 				case 4:
-					numberKeycards = 1;
+					GAME.main.keycardsNeeded = 1;
 					numberTraps = Math.round(mazeSize * mazeSize - 5); // ~80% in the 5x5 maze, only gets "worse"
 					break;
 			}
@@ -104,19 +105,21 @@ GAME.main = {
 			GAME.player.init(name, gender);
 			
 			GAME.main.newGame.spawnPlayer();
-			GAME.main.newGame.spawnKeycards(numberKeycards);
+			GAME.main.newGame.spawnKeycards(GAME.main.keycardsNeeded);
 			GAME.main.exitLocation = GAME.main.newGame.spawnExit();
 			GAME.main.newGame.spawnTraps(numberTraps);
 
 			// On easy we get the exit painted by default
 			if(GAME.main.difficulty === 1){
-				GAME.main.maze.paintThing(GAME.main.exitLocation.x, GAME.main.exitLocation.y, 'hotpink');
+				GAME.main.maze.paintExit();
 			};
 
-			//update interface?
-			GAME.interface.clearButtons();
+			GAME.interface.clearTextAndButtons();
 			GAME.interface.initWalkingButtons();
 
+			// GAME.player.reset(); // TODO init lust and other things
+
+			GAME.main.maze.paintPlayerPosition();
 			GAME.main.newTurn();
 		},
 
@@ -275,6 +278,15 @@ GAME.main = {
 			GAME.player.previousY = GAME.player.y;
 			GAME.player.previousColor = GAME.main.mazeDOM[GAME.player.x][GAME.player.y].style.backgroundColor;
 			GAME.main.maze.paintThing(GAME.player.x, GAME.player.y, 'red');
+		},
+
+		paintExit:function(){
+			if(GAME.player.x == GAME.main.exitLocation.x && GAME.player.y == GAME.main.exitLocation.y){
+				// Player is on the exit, we need to prevent the previous color from replacing it
+				GAME.player.previousColor = 'chartreuse';
+			}else{
+				GAME.main.maze.paintThing(GAME.main.exitLocation.x, GAME.main.exitLocation.y, 'chartreuse');
+			}
 		}
 	},
 
@@ -305,10 +317,15 @@ GAME.main = {
 					alert("newTurn got a direction that doesn't exists! '"+directions[i]+"'");
 					break;
 			}
-
 		}
 
-		GAME.main.maze.paintPlayerPosition();
+		GAME.inventory.updateTurn();
+
+		GAME.interface.updatePlayerStats();
+
+		// TODO: Get seen entrances and write them?
+		// Print player status
+		// Time calculations
 	},
 	movement:{
 		north:function(){GAME.main.movement.doWalk(CELL_NORTH);},
@@ -320,8 +337,33 @@ GAME.main = {
 				var directionVector = GAME.main.maze.convertToVector(direction);
 				GAME.player.x -= directionVector.x;
 				GAME.player.y += directionVector.y;
-				// TODO check for things
-				GAME.main.newTurn();
+
+				GAME.main.maze.paintPlayerPosition();
+
+				var thing = GAME.main.mazeThings[GAME.player.x][GAME.player.y];
+				if(thing != undefined){
+					switch(thing.type){
+						case 'exit':
+							// TODO text saying you found the exit
+							GAME.main.maze.paintExit();
+							if((GAME.main.keycardsNeeded - GAME.player.keys) == 0){
+								GAME.interface.addText('victoly');
+
+							}
+							break;
+						case 'keycard':
+							GAME.player.getKeycard();
+							break;
+						case 'trap':
+							GAME.player.getTrap(thing);
+							break;
+					}
+					// add thing to player
+					// messages
+					// 
+				}else{
+					GAME.main.newTurn();
+				}
 			}else{
 				alert("TRIED TO WALK BUT THERE'S A WALL ON THE WAY! x:%i, y:%i, direction: %i", GAME.player.x, GAME.player.y, direction);
 			}
@@ -365,8 +407,6 @@ GAME.main = {
 				case 32:
 					document.querySelector('button').click();
 					break;
-
-
 			}
 		}
 	}

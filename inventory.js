@@ -177,5 +177,23 @@ GAME.inventory = {
 				GAME.inventory.removeItemByIndex(i);
 			}
 		}
+	},
+
+	updateTurn:function(){
+		GAME.inventory.items = GAME.inventory.items.filter(function(elem){
+			if(!isNaN(Number(elem.release)) && elem.release - 1 == 0){
+				GAME.inventory.unequipItem(elem);
+				return false;
+			}else{
+				return true;
+			}
+		});
+
+		for (var i = GAME.inventory.items.length - 1; i >= 0; i--){
+			if(!isNaN(Number(GAME.inventory.items[i].release))){
+				GAME.inventory.items[i].release--;
+				GAME.inventory.items[i].effectEachTurn();
+			}
+		}
 	}
 }
